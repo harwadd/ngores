@@ -785,6 +785,10 @@ MACRO_CONFIG_INT(ClVideoRecorderFPS, cl_video_recorder_fps, 60, 1, 1000, CFGFLAG
  * Add config variables for mods below this comment to avoid merge conflicts.
  */
 
+ 
+// welcome message
+MACRO_CONFIG_INT(SvWelcomeBroadcast, sv_welcome_broadcast, 1, 0, 1, CFGFLAG_SERVER, "Display welcome message")
+
 // record flag
 MACRO_CONFIG_INT(SvShowRecordFlag, sv_show_record_flag, 1, 0, 1, CFGFLAG_SERVER, "Activate the record flag for the record holder.")
 

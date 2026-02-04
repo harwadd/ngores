@@ -199,6 +199,13 @@ void CGameControllerDDNet::OnPlayerConnect(CPlayer *pPlayer)
 		GameServer()->SendChatTarget(ClientId, "DDraceNetwork Mod. Version: " GAME_VERSION);
 		GameServer()->SendChatTarget(ClientId, "please visit DDNet.org or say /info and make sure to read our /rules");
 	}
+
+	// send broadcast message on join
+	if(g_Config.m_SvWelcomeBroadcast) {
+	char aBuf[128];
+	str_format(aBuf, sizeof(aBuf), "Welcome, '%s'!", Server()->ClientName(ClientId));
+	GameServer()->SendBroadcast(aBuf, ClientId);
+	}	
 }
 
 void CGameControllerDDNet::OnPlayerDisconnect(CPlayer *pPlayer, const char *pReason)
