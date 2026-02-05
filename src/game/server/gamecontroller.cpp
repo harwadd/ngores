@@ -43,6 +43,9 @@ IGameController::IGameController(class CGameContext *pGameServer) :
 	m_aMapWish[0] = 0;
 
 	m_CurrentRecord.reset();
+	// ngores
+	m_CurrentRecordHolder[0] = 0;
+	m_pRecordFlagChar = NULL;
 }
 
 IGameController::~IGameController() = default;
