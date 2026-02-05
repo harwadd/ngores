@@ -2165,6 +2165,8 @@ set_src(ENGINE_SHARED GLOB_RECURSE src/engine/shared
   video.h
   websockets.cpp
   websockets.h
+  whitelist.cpp
+  whitelist.h
 )
 set_src(ENGINE_GFX GLOB src/engine/gfx
   image.cpp

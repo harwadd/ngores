@@ -785,6 +785,10 @@ MACRO_CONFIG_INT(ClVideoRecorderFPS, cl_video_recorder_fps, 60, 1, 1000, CFGFLAG
  * Add config variables for mods below this comment to avoid merge conflicts.
  */
 
+// whitelist
+MACRO_CONFIG_INT(SvWhitelist, sv_whitelist, 0, 0, 1, CFGFLAG_SERVER, "Enable whitelist checking")
+MACRO_CONFIG_STR(SvWhitelistMessage, sv_whitelist_message, 255, "You are not on the whitelist", CFGFLAG_SERVER, "Display a whitelist message on client join (don't leave blank)")
+
  
 // welcome message
 MACRO_CONFIG_INT(SvWelcomeBroadcast, sv_welcome_broadcast, 1, 0, 1, CFGFLAG_SERVER, "Display welcome message")

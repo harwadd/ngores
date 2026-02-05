@@ -38,7 +38,9 @@
 #include <engine/shared/protocol_ex.h>
 #include <engine/shared/rust_version.h>
 #include <engine/shared/snapshot.h>
+#include <engine/shared/whitelist.h> // ngores
 #include <engine/storage.h>
+
 
 #include <game/server/gamecontext.h>
 #include <game/server/player.h>
@@ -4369,6 +4371,8 @@ void CServer::RegisterCommands()
 	Kernel()->RegisterInterface(static_cast<IHttp *>(&m_Http), false);
 
 	// ngores
+	g_Whitelist.Init(m_pConsole, m_pStorage);
+
 	Console()->Register("rainbow", "i[id] s[speed]", CFGFLAG_SERVER, ConRainbow, this, "Toggle rainbow mode at the specified speed for the given ID.");
 
 	Console()->Register("pulse", "i[id] s[speed]", CFGFLAG_SERVER, ConPulse, this, "Toggle rainbow black mode at the specified speed for the given ID.");

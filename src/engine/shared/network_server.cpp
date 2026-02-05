@@ -11,6 +11,7 @@
 #include <engine/shared/compression.h>
 #include <engine/shared/packer.h>
 #include <engine/shared/protocol.h>
+#include <engine/shared/whitelist.h>
 
 const int g_DummyMapCrc = 0xD6909B17;
 const unsigned char g_aDummyMapData[] = {
@@ -203,6 +204,29 @@ bool CNetServer::Connlimit(NETADDR Addr)
 
 int CNetServer::TryAcceptClient(NETADDR &Addr, SECURITY_TOKEN SecurityToken, bool VanillaAuth, bool Sixup, SECURITY_TOKEN Token)
 {
+	if(g_Config.m_SvWhitelist && !g_Whitelist.IsWhitelisted(&Addr)) {
+		char aAddrStr[NETADDR_MAXSTRSIZE];
+		net_addr_str(&Addr, aAddrStr, sizeof(aAddrStr), false);
+
+		// send webhook message to discord
+		char aMsg[256];
+		str_format(
+    		aMsg,
+    		sizeof(aMsg),
+    		"Client from IP %s tried to connect but is not whitelisted.",
+    		aAddrStr
+		);
+
+		// log to console for debugging
+		dbg_msg("whitelist", "%s", aMsg);
+
+		char aDisconnectMsg[128];
+		str_copy(aDisconnectMsg, g_Config.m_SvWhitelistMessage, sizeof(aDisconnectMsg));
+
+		CNetBase::SendControlMsg(m_Socket, &Addr, 0, NET_CTRLMSG_CLOSE, aDisconnectMsg, sizeof(aDisconnectMsg), SecurityToken, Sixup);
+
+		return -1; // reject client without banning
+	}
 	if(Sixup && !g_Config.m_SvSixup)
 	{
 		const char aMsg[] = "0.7 connections are not accepted at this time";
