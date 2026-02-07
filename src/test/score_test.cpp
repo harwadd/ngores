@@ -49,6 +49,8 @@ struct Score : public testing::TestWithParam<IDbConnection *>
 		ASSERT_TRUE(m_pConn->ExecuteUpdate(&NumInserted, m_aError, sizeof(m_aError))) << m_aError;
 		ASSERT_TRUE(m_pConn->PrepareStatement("DELETE FROM record_saves", m_aError, sizeof(m_aError))) << m_aError;
 		ASSERT_TRUE(m_pConn->ExecuteUpdate(&NumInserted, m_aError, sizeof(m_aError))) << m_aError;
+		ASSERT_TRUE(m_pConn->PrepareStatement("DELETE FROM record_users", m_aError, sizeof(m_aError))) << m_aError;
+		ASSERT_TRUE(m_pConn->ExecuteUpdate(&NumInserted, m_aError, sizeof(m_aError))) << m_aError;
 	}
 
 	void LoadBestTime()

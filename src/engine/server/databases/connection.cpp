@@ -90,3 +90,31 @@ void IDbConnection::FormatCreatePoints(char *aBuf, unsigned int BufferSize) cons
 		")",
 		GetPrefix(), MAX_NAME_LENGTH_SQL, BinaryCollate());
 }
+
+// ngores
+void IDbConnection::FormatCreateUsers(char *aBuf, unsigned int BufferSize) const
+{
+	str_format(aBuf, BufferSize,
+		"CREATE TABLE IF NOT EXISTS %s_users ("
+		"  ID INT AUTO_INCREMENT, "
+		"  Name VARCHAR(%d) COLLATE %s NOT NULL, "
+
+		"  Username VARCHAR(32) UNIQUE, "
+		"  Password VARCHAR(255), "
+
+		"  Points INT DEFAULT 0, "
+		"  Finishes INT DEFAULT 0, "
+		"  TimePlayed INT DEFAULT 0, "
+
+		"  Role ENUM('player','moderator','admin','owner') DEFAULT 'player', "
+		"  IsActive TINYINT(1) DEFAULT 1, "
+
+		"  LastLogin TIMESTAMP NULL, "
+		"  CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+		"  LastIP VARCHAR(45), "
+
+		"  PRIMARY KEY (ID), "
+		"  UNIQUE (Name)"
+		")",
+		GetPrefix(), MAX_NAME_LENGTH_SQL, BinaryCollate());
+}
