@@ -1112,9 +1112,12 @@ void CPlayer::ProcessScoreResult(CScorePlayerResult &Result)
 				{
 					SetLogged(true);
 					// remove from spectator
-					SetTeam(TEAM_GAME);
-					KillCharacter(WEAPON_SELF);
-					Respawn();
+					if (g_Config.m_SvNeedsLogin)
+					{
+						SetTeam(TEAM_GAME);
+						KillCharacter(WEAPON_SELF);
+						Respawn();
+					}
 
 					dbg_msg("login", "Player %d marked as logged in", m_ClientId);
 				}
