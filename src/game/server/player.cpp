@@ -42,6 +42,8 @@ CPlayer::CPlayer(CGameContext *pGameServer, uint32_t UniqueClientId, int ClientI
 	m_IsLogged = false;
 	m_LoginTries = 0;
 	m_LoginLocked = false;
+	m_FirstTick = false;
+	m_CanAutoLogin = true;
 
 }
 
@@ -241,10 +243,10 @@ static int PlayerFlags_SixToSeven(int Flags)
 void CPlayer::Tick()
 {
 
-
 	if(m_ScoreQueryResult != nullptr && m_ScoreQueryResult->m_Completed && m_SentSnaps >= 3)
 	{
 		ProcessScoreResult(*m_ScoreQueryResult);
+		AutoLogin(*m_ScoreQueryResult); // ngores
 		m_ScoreQueryResult = nullptr;
 	}
 	if(m_ScoreFinishResult != nullptr && m_ScoreFinishResult->m_Completed)
@@ -407,6 +409,11 @@ void CPlayer::Tick()
 		{
 			GameServer()->SendEmoticon(GetCid(), EMOTICON_GHOST, -1);
 		}
+	}
+
+	// ngores
+	if (m_CanAutoLogin && !m_IsLogged) {
+		GameServer()->Score()->AutoLogin(m_ClientId, Server()->ClientName(m_ClientId));
 	}
 }
 
@@ -1296,3 +1303,15 @@ bool CPlayer::DropSoundtrack()
 	return true;
 }
 
+void CPlayer::AutoLogin(CScorePlayerResult &Result)
+{
+	if (!m_FirstTick) {
+		Result.m_Data.m_CanAutoLogin = true;
+		m_FirstTick = true;
+	}
+
+	if (!Result.m_Data.m_CanAutoLogin) {
+		 m_CanAutoLogin = false;
+	}
+
+}

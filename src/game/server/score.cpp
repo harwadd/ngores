@@ -140,7 +140,6 @@ void CScore::LoadMapInfo()
 
 void CScore::LoadPlayerData(int ClientId, const char *pName)
 {	
-	AutoLogin(ClientId, pName); // ngores
 	ExecPlayerThread(CScoreWorker::LoadPlayerData, "load player data", ClientId, pName, 0);
 }
 

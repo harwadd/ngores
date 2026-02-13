@@ -2087,11 +2087,13 @@ bool CScoreWorker::CanAutoLogin(IDbConnection *pSqlServer, const ISqlData *pGame
     if(Count == 0)
     {
         dbg_msg("login", "IP not found in database.");
+		pResult->m_Data.m_CanAutoLogin = false;
         return false;
     }
     else if(Count > 1)
     {
         dbg_msg("login", "Multiple accounts with the same IP, cannot auto-login.");
+		pResult->m_Data.m_CanAutoLogin = false;
         return false;
     }
 

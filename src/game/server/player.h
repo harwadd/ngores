@@ -131,8 +131,9 @@ public:
 
 	// ngores
 	char m_aLoginName[32];
-	bool m_FirstTick = true;
+	bool m_FirstTick;
 
+	bool m_CanAutoLogin;
 	int m_LoginTries = 0;
 	int m_LoginCooldown = 0;
 	bool m_LoginLocked;
@@ -323,6 +324,7 @@ public:
 
 	bool m_FirstPacket;
 	int64_t m_LastSqlQuery;
+	void AutoLogin(CScorePlayerResult &Result);
 	void ProcessScoreResult(CScorePlayerResult &Result);
 	std::shared_ptr<CScorePlayerResult> m_ScoreQueryResult;
 	std::shared_ptr<CScorePlayerResult> m_ScoreFinishResult;

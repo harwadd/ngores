@@ -44,6 +44,7 @@ struct CScorePlayerResult : ISqlResult
 	} m_MessageKind;
 	union
 	{
+		bool m_CanAutoLogin;
 		char m_aaMessages[MAX_MESSAGES][512];
 		char m_aBroadcast[1024];
 		struct
